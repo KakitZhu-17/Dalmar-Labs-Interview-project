@@ -35,12 +35,14 @@ export default function Form() {
     let log = document.getElementById("log");
     let newMsg = document.createElement("div");
     newMsg.textContent=`${role}: ${responses}`;
+    newMsg.style.position = 'relative';
+    newMsg.style.zIndex = "2";
     log.append(newMsg)
   }
 
   function handleEnterKeyDown(e){
-    if(answer.length !== 0 || status !== 'submit'){
-      if (e.key === 'Enter') {
+    if (e.key === 'Enter') {
+      if(answer.length !== 0 && status !== 'submit'){
         handleSubmit;
       }
     }
@@ -49,8 +51,10 @@ export default function Form() {
   return (
     <>
       <h1>LLM Q&A by Kakit Zhu</h1>
+      <div className="box">
+        <div className="eye"></div>
+      </div>
       <div id="log">
-        
       </div>
       <div id = "controls">
         <form onSubmit={handleSubmit}>
