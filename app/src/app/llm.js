@@ -27,8 +27,6 @@ export default async function callAI(input,convo) {
       });
 
       const data = await response.json();
-      //console.log("Response full:", data.choices);
-      //console.log("body sent", body.messages);
       return data.choices[0].message.content;
     } catch (error) {
       console.error("Error:", error);

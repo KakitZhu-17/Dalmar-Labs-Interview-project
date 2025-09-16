@@ -12,7 +12,6 @@ export default function Form() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    //console.log(answer)
     msg.push({role: "user", content: answer})
     setStatus('submit');
     try {
