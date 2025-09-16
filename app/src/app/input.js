@@ -2,19 +2,26 @@
 import { useState } from 'react';
 import callAI from './llm.js';
 
+let msg=[
+  {role: "system", content: "polite Q&A bot"}
+//  {role: "user", content: input}
+]
+
 export default function Form() {
   const [answer, setAnswer] = useState('');
   const [status, setStatus] = useState('listening');
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(answer)
+    //console.log(answer)
+    msg.push({role: "user", content: answer})
     setStatus('submit');
     try {
+      appendMessages(answer,"user","grey");
+      let response = await callAI(answer,msg);
+      msg.push({role: "system", content: response });
+      appendMessages(response,"AI","white");
       setStatus('success');
-      appendMessages(answer,"user")
-      let response = await callAI(answer)
-      await appendMessages(response,"AI")
     } catch (error) {
       setStatus('listening');
     }
@@ -31,11 +38,12 @@ export default function Form() {
     currentPos.scrollTop = currentPos.scrollHeight;
   }
 
-  function appendMessages(responses,role){
+  function appendMessages(responses,role,color){
     let log = document.getElementById("log");
     let newMsg = document.createElement("div");
     newMsg.textContent=`${role}: ${responses}`;
     newMsg.style.position = 'relative';
+    newMsg.style.color = color;
     newMsg.style.zIndex = "2";
     log.append(newMsg)
   }

@@ -1,4 +1,4 @@
-export default async function callAI(input) {
+export default async function callAI(input,convo) {
   const apiFile = require("../../env.json");
   const apiKey = apiFile["api_key"];
   const endpoint = apiFile["endpoint"];
@@ -14,10 +14,7 @@ export default async function callAI(input) {
 
   const body = {
     model: modelName,
-    messages: [
-      {role: "system", content: "polite Q&A bot"},
-      {role: "user", content: input }
-    ],
+    messages: convo,
     temperature: 1.0,
     max_tokens: 500
   };
@@ -30,7 +27,8 @@ export default async function callAI(input) {
       });
 
       const data = await response.json();
-      //console.log("Response azure full:", data.choices);
+      //console.log("Response full:", data.choices);
+      //console.log("body sent", body.messages);
       return data.choices[0].message.content;
     } catch (error) {
       console.error("Error:", error);
