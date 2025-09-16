@@ -3,8 +3,7 @@ import { useState } from 'react';
 import callAI from './llm.js';
 
 let msg=[
-  {role: "system", content: "polite Q&A bot"}
-//  {role: "user", content: input}
+  {role: "system", content: "Q&A bot but you are an english butler"}
 ]
 
 export default function Form() {
@@ -17,11 +16,20 @@ export default function Form() {
     msg.push({role: "user", content: answer})
     setStatus('submit');
     try {
-      appendMessages(answer,"user","grey");
+      let loadingEye =document.getElementById("eye");
+      loadingEye.style.animationPlayState = "paused";
+      loadingEye.style.animation = "thinking 2s infinite linear";
+      loadingEye.style.animationPlayState = "running";
+
+      appendMessages(answer,"You","grey");
       let response = await callAI(answer,msg);
       msg.push({role: "system", content: response });
-      appendMessages(response,"AI","white");
+      appendMessages(response,"Jarvin","white");
       setStatus('success');
+
+      loadingEye.style.animation = "look-around 5s infinite ease-in-out";
+      loadingEye.style.animationPlayState = "running";
+      loadingEye.style.background = "#000000ff";
     } catch (error) {
       setStatus('listening');
     }
@@ -45,7 +53,7 @@ export default function Form() {
     newMsg.style.position = 'relative';
     newMsg.style.color = color;
     newMsg.style.zIndex = "2";
-    log.append(newMsg)
+    log.append(newMsg);
   }
 
   function handleEnterKeyDown(e){
@@ -58,9 +66,9 @@ export default function Form() {
 
   return (
     <>
-      <h1>LLM Q&A by Kakit Zhu</h1>
+      <h1>Jarvin Q&A AI by Kakit Zhu</h1>
       <div className="box">
-        <div className="eye"></div>
+        <div id="eye"></div>
       </div>
       <div id="log">
       </div>
