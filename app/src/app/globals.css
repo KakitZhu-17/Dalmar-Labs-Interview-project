@@ -82,15 +82,23 @@ button:disabled {
   100% { top: 35px; left: 35px; } 
 }
 
-.eye {
+@keyframes thinking {
+  0%   {width: 30px; height: 30px; background: #3c24f7;}
+  25%  {width: 50px; height: 50px; background: #3c24f7;}
+  50%  {width: 70px; height: 70px; background: #3c24f7;}
+  75%  {width: 50px; height: 50px; background: #3c24f7;}
+  100% {width: 30px; height: 30px; background: #3c24f7;}
+}
+
+#eye {
   width: 30px;
   height: 30px;
   background: rgb(0, 0, 0);
   border-radius: 50%;
-  border: 3px solid #2408f7; /* black border */
+  border: 3px solid #3c24f7;
   position: absolute;
   top: 35px;
   left: 35px;
   z-index: 0;
-  animation: look-around 7s infinite ease-in-out;
+  animation: look-around 5s infinite ease-in-out;
 }
